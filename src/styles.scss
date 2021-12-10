@@ -1,1 +1,135 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap");
+
+$color-burgundy: #882426;
+$color-oatmeal: #CDBEA7;
+$color-oatmeal-transparent: #cdbea748;
+$color-ash: #323030;
+$color-ash-transparent: #857f7f;
+$color-gold: #C29545;
+$color-red: red;
+$color-green: green;
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+button,
+input {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: $color-ash;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+hr {
+  height: 2px;
+  margin-bottom: 10px;
+  background-color: $color-ash;
+  border: none;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: #882426;
+  transition: 0.3s;
+
+  &:hover {
+    color: $color-gold;
+  }
+
+  &--btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: $color-oatmeal;
+    background-color: $color-ash;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $color-gold;
+      color: $color-ash;
+    }
+  }
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+
+  &--txt {
+    border: 3px solid $color-ash;
+  }
+
+  &--btn {
+    background-color: $color-ash;
+    color: $color-oatmeal;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $color-gold;
+      color: $color-ash;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: $color-ash;
+      background-color: $color-ash-transparent;
+    }
+  }
+}
+
+input.ng-dirty.ng-invalid {
+  border-color: $color-red;
+}
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-box {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    background-color: $color-oatmeal-transparent;
+    text-align: center;
+    border-radius: 5px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-submit {
+    width: 60%;
+  }
+}
+
+.no-margin {
+  margin: 0;
+}

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chi-shop-fe5ac": {
+      "hosting": {
+        "shop": [
+          "chi-shop-fe5ac"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chi-shop-fe5ac"
+  }
+}

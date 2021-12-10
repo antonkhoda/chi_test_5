@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "shop:build:production",
+            "firebaseProject": "chi-shop-fe5ac",
+            "firebaseHostingSite": "chi-shop-fe5ac"
+          }
         }
       }
     }

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './assets/guards/login/login.guard';
-import { HomeComponent } from './pages/home/home.component';
+import { UserGuard } from './assets/guards/user/user.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -10,19 +11,21 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    canLoad: [LoginGuard],
     loadChildren: () =>
-      import('./pages/login/login.module').then((module) => module.LoginModule),
+      import('./login/login.module').then((module) => module.LoginModule),
   },
   {
     path: 'singup',
+    canLoad: [LoginGuard],
     loadChildren: () =>
-      import('./pages/singup/singup.module').then((module) => module.SingupModule),
+      import('./singup/singup.module').then((module) => module.SingupModule),
   },
   {
     path: 'shop',
-    canLoad: [LoginGuard],
+    canLoad: [UserGuard],
     loadChildren: () =>
-      import('./pages/shop/shop.module').then((module) => module.ShopModule),
+      import('./shop/shop.module').then((module) => module.ShopModule),
   },
 ];
 

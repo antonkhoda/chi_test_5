@@ -3,16 +3,16 @@ import { CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class LoginGuard implements CanLoad {
+export class UserGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.getUserLogin();
+      return this.getUserLogin();
   }
 
   private getUserLogin(): boolean {
-    return !localStorage.getItem('userList');
+    return !!localStorage.getItem('userList');
   }
 }

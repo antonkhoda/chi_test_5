@@ -16,12 +16,6 @@ const routes: Routes = [
       import('./login/login.module').then((module) => module.LoginModule),
   },
   {
-    path: 'singup',
-    canLoad: [LoginGuard],
-    loadChildren: () =>
-      import('./singup/singup.module').then((module) => module.SingupModule),
-  },
-  {
     path: 'shop',
     canLoad: [UserGuard],
     loadChildren: () =>

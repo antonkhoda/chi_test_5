@@ -7,7 +7,6 @@ import { ShopComponent } from './shop/shop.component';
 import { CoreModule } from "./core/core.module";
 import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from './home/home.component';
-import { SingupComponent } from './singup/singup.component';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -20,7 +19,6 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     AppComponent,
     ShopComponent,
     HomeComponent,
-    SingupComponent,
   ],
   imports: [
     BrowserModule,

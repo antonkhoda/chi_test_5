@@ -13,13 +13,6 @@ export class LoginGuard implements CanLoad {
   }
 
   private getUserLogin(): boolean {
-    if (localStorage.length > 0 && localStorage.getItem('userList')) {
-      const user = JSON.parse(localStorage.getItem('userList') as string);
-      if (user) {
-        return true;
-      }
-      return false;
-    }
-    return false;
+    return !!localStorage.getItem('userList');
   }
 }

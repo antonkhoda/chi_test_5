@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-singup',
@@ -14,7 +15,8 @@ export class SingupComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private auth: Auth,
-    private afs: Firestore
+    private afs: Firestore,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class SingupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$'),
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ],
       ],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -36,9 +38,9 @@ export class SingupComponent implements OnInit {
 
   public register(): void {
     const { email, password } = this.singupForm.value;
-    this.emailSingUp(email, password).then(() => {
+    this.emailSingUp(email.toLowerCase(), password).then(() => {
       alert('User successfully registered');
-      this.singupForm.reset()
+      this.singupForm.reset();
     }).catch((error) => {
       alert("ERROR: " + error);
     });
@@ -51,6 +53,9 @@ export class SingupComponent implements OnInit {
       email: credential.user.email,
       role: 'USER'
     };
-    await setDoc(doc(this.afs, 'users', credential.user.uid), user);
+    setDoc(doc(this.afs, 'users', credential.user.uid), user).then(() => {
+      localStorage.setItem('userList', JSON.stringify(user));
+      this.router.navigate(['/shop']);
+    });
   }
 }

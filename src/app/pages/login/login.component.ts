@@ -5,6 +5,7 @@ import { doc, Firestore } from '@angular/fire/firestore';
 import { docData } from 'rxfire/firestore';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
         null,
         [
           Validators.required,
-          Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$'),
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ],
       ],
       password: [null, [Validators.required, Validators.minLength(6)]],
@@ -46,12 +47,12 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     const { email, password } = this.loginForm.value;
-    this.emailLogin(email, password).then(() => {
+    this.emailLogin(email.toLowerCase(), password).then(() => {
       alert('Welcome');
       this.loginForm.reset()
     }).catch((error) => {
       alert("ERROR: " + error);
-    });;
+    });
   }
 
   private async emailLogin(email: string, password: string): Promise<any> {
@@ -59,25 +60,27 @@ export class LoginComponent implements OnInit {
     this.subscriptions.add(
       docData(doc(this.afs, 'users', credential.user.uid)).subscribe((user) => {
         localStorage.setItem('userList', JSON.stringify(user));
-        
-        if (user) {
-          this.router.navigate(['/shop']);
-        }
+        this.router.navigate(['/shop']);
       })
     );
   }
 
-  // FacebookAuth() {
-  //   return this.AuthLogin(new auth.FacebookAuthProvider());
-  // } 
-
-  // AuthLogin(provider) {
-  //   return this.afAuth.auth.signInWithPopup(provider)
-  //   .then((result) => {
-  //       console.log('You have been successfully logged in!')
-  //   }).catch((error) => {
-  //       console.log(error)
-  //   })
-  // }
+  public loginWithFacebook(): void {
+    const provider = new FacebookAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = {
+          uid: result.user.uid,
+          email: result.user.email,
+          role: 'USER'
+        };
+        localStorage.setItem('userList', JSON.stringify(user));
+        this.router.navigate(['/shop']);
+      })
+      .catch((error) => {
+        alert('ERROR: ' + error);
+      });
+  }
 
 }

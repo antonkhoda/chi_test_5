@@ -1,32 +1,12 @@
 <div class="dialog">
   <div class="dialog-box">
 
-    <div *ngIf='loginSwitch'>
-      <h2 class="title">LOGIN</h2>
-      <form [formGroup]="loginForm" (submit)="login()" class="form">
-        <input type="email" class="input input--txt" placeholder="Email" formControlName="email">
-        <input type="password" class="input input--txt" placeholder="Password" formControlName="password">
-        <input type="submit" value="Log in" class="input input--btn form-submit" [disabled]="loginForm.invalid">
-      </form>
-      <h4 class="title">OR</h4>
-      <div class="dialog-box__options">
-        <button class="input input--btn dialog-box__options--facebook" (click)="loginWithFacebook()">Continue with
-          Facebook</button>
-      </div>
-    </div>
-
-    <div *ngIf='!loginSwitch'>
-      <h2 class="title">SINGUP</h2>
-      <form [formGroup]="singupForm" (submit)="register()" class="form">
-        <input type="email" class="input input--txt" placeholder="Email" formControlName="email">
-        <input type="password" class="input input--txt" placeholder="Password" formControlName="password">
-        <input type="submit" value="Sing up" class="input input--btn form-submit" [disabled]="singupForm.invalid">
-      </form>
-    </div>
+    <app-login-block *ngIf='loginSwitch'></app-login-block>
+    <app-registration-block *ngIf='!loginSwitch'></app-registration-block>
 
     <hr>
 
-    <div class="dialog-box__links">
+    <nav class="dialog-box__links">
       <p *ngIf='loginSwitch'>
         No account?
         <a class="link" (click)='loginSwitchBtn()'>Sing up</a>
@@ -39,6 +19,7 @@
         Back
         <a [routerLink]=" [''] " routerLinkActive="active" class="link">Home</a>
       </p>
-    </div>
+    </nav>
+
   </div>
 </div>

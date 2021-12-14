@@ -1,0 +1,6 @@
+<h2 class="title">REGISTRATION</h2>
+<form [formGroup]="singupForm" (submit)="register()" class="form">
+  <input type="email" class="input input--txt" placeholder="Email" formControlName="email">
+  <input type="password" class="input input--txt" placeholder="Password" formControlName="password">
+  <input type="submit" value="Sing up" class="input input--btn form-submit" [disabled]="singupForm.invalid">
+</form>

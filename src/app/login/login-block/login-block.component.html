@@ -1,0 +1,11 @@
+<h2 class="title">LOGIN</h2>
+<form [formGroup]="loginForm" (submit)="login()" class="form">
+  <input type="email" class="input input--txt" placeholder="Email" formControlName="email">
+  <input type="password" class="input input--txt" placeholder="Password" formControlName="password">
+  <input type="submit" value="Log in" class="input input--btn form-submit" [disabled]="loginForm.invalid">
+</form>
+<h4 class="title">OR</h4>
+<div class="dialog-box__options">
+  <button class="input input--btn dialog-box__options--facebook" (click)="loginWithFacebook()">Continue with
+    Facebook</button>
+</div>

@@ -1,11 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { docData } from 'rxfire/firestore';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 
 @Component({
   selector: 'app-login',
@@ -14,113 +7,14 @@ import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm!: FormGroup;
-  public singupForm!: FormGroup;
   public loginSwitch: boolean = true;
-  private subscriptions: Subscription = new Subscription();
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private auth: Auth,
-    private afs: Firestore,
-    private router: Router
-  ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.initLoginForm();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  private initLoginForm(): void {
-    this.loginForm = this.formBuilder.group({
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ],
-      ],
-      password: [null, [Validators.required, Validators.minLength(6)]],
-    });
-
-    this.singupForm = this.formBuilder.group({
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ],
-      ],
-      password: [null, [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  ngOnInit(): void {}
 
   public loginSwitchBtn(): void{
     this.loginSwitch = !this.loginSwitch;
-  }
-
-  public login(): void {
-    const { email, password } = this.loginForm.value;
-    this.emailLogin(email.toLowerCase(), password).then(() => {
-      alert('Welcome');
-      this.loginForm.reset()
-    }).catch((error) => {
-      alert("ERROR: " + error);
-    });
-  }
-
-  private async emailLogin(email: string, password: string): Promise<any> {
-    const credential = await signInWithEmailAndPassword(this.auth, email, password);
-    this.subscriptions.add(
-      docData(doc(this.afs, 'users', credential.user.uid)).subscribe((user) => {
-        localStorage.setItem('userList', JSON.stringify(user));
-        this.router.navigate(['/shop']);
-      })
-    );
-  }
-
-  public loginWithFacebook(): void {
-    const provider = new FacebookAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = {
-          uid: result.user.uid,
-          email: result.user.email,
-          role: 'USER'
-        };
-        localStorage.setItem('userList', JSON.stringify(user));
-        this.router.navigate(['/shop']);
-      })
-      .catch((error) => {
-        alert('ERROR: ' + error);
-      });
-  }
-
-  public register(): void {
-    const { email, password } = this.singupForm.value;
-    this.emailSingUp(email.toLowerCase(), password).then(() => {
-      alert('User successfully registered');
-      this.singupForm.reset();
-    }).catch((error) => {
-      alert("ERROR: " + error);
-    });
-  }
-
-  private async emailSingUp(email: string, password: string): Promise<any> {
-    const credential = await createUserWithEmailAndPassword(this.auth, email, password);
-    const user = {
-      uid: credential.user.uid,
-      email: credential.user.email,
-      role: 'USER'
-    };
-    setDoc(doc(this.afs, 'users', credential.user.uid), user).then(() => {
-      localStorage.setItem('userList', JSON.stringify(user));
-      this.router.navigate(['/shop']);
-    });
   }
 
 }

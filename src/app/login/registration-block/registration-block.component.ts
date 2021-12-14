@@ -56,7 +56,7 @@ export class RegistrationBlockComponent implements OnInit {
     };
     setDoc(doc(this.afs, 'users', credential.user.uid), user).then(() => {
       localStorage.setItem('userList', JSON.stringify(user));
-      this.router.navigate(['/shop']);
+      this.router.navigate(['']);
     });
   }
 }

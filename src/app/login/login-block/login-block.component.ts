@@ -59,7 +59,7 @@ export class LoginBlockComponent implements OnInit {
     this.subscriptions.add(
       docData(doc(this.afs, 'users', credential.user.uid)).subscribe((user) => {
         localStorage.setItem('userList', JSON.stringify(user));
-        this.router.navigate(['/shop']);
+        this.router.navigate(['']);
       })
     );
   }
@@ -75,7 +75,7 @@ export class LoginBlockComponent implements OnInit {
           role: 'USER'
         };
         localStorage.setItem('userList', JSON.stringify(user));
-        this.router.navigate(['/shop']);
+        this.router.navigate(['']);
       })
       .catch((error) => {
         alert('ERROR: ' + error);

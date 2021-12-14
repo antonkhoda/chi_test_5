@@ -7,14 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  public loginSwitch: boolean = true;
-
   constructor() { }
 
   ngOnInit(): void {}
-
-  public loginSwitchBtn(): void{
-    this.loginSwitch = !this.loginSwitch;
-  }
 
 }

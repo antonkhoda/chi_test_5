@@ -4,3 +4,10 @@
   <input type="password" class="input input--txt" placeholder="Password" formControlName="password">
   <input type="submit" value="Sing up" class="input input--btn form-submit" [disabled]="singupForm.invalid">
 </form>
+
+<nav class="dialog-box__links">
+  <p>
+    Have an account?
+    <a class="link" [routerLink]=" [''] " routerLinkActive="active">Log in</a>
+  </p>
+</nav>

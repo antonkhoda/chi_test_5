@@ -6,6 +6,7 @@ import { docData } from 'rxfire/firestore';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-login-block',
@@ -20,7 +21,8 @@ export class LoginBlockComponent implements OnInit {
     private formBuilder: FormBuilder,
     private auth: Auth,
     private afs: Firestore,
-    private router: Router
+    private router: Router,
+    private toast: HotToastService
   ) { }
 
   ngOnInit(): void {
@@ -48,10 +50,10 @@ export class LoginBlockComponent implements OnInit {
     const { email, password } = this.loginForm.value;
 
     this.emailLogin(email.toLowerCase(), password).then(() => {
-      alert('Welcome');
+      this.toast.success('Welcome');
       this.loginForm.reset()
     }).catch((error) => {
-      alert("ERROR: " + error);
+      this.toast.error("ERROR: " + error);
     });
   }
 
@@ -77,11 +79,12 @@ export class LoginBlockComponent implements OnInit {
           email: result.user.email,
           role: 'USER'
         };
+        this.toast.success('Welcome');
         localStorage.setItem('userList', JSON.stringify(user));
         this.router.navigate(['']);
       })
       .catch((error) => {
-        alert('ERROR: ' + error);
+        this.toast.error('ERROR: ' + error);
       });
   }
 

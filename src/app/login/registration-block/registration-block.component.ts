@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-registration-block',
@@ -17,7 +18,8 @@ export class RegistrationBlockComponent implements OnInit {
     private formBuilder: FormBuilder,
     private auth: Auth,
     private afs: Firestore,
-    private router: Router
+    private router: Router,
+    private toast: HotToastService
   ) { }
 
   ngOnInit(): void {
@@ -41,10 +43,10 @@ export class RegistrationBlockComponent implements OnInit {
     const { email, password } = this.singupForm.value;
 
     this.emailSingUp(email.toLowerCase(), password).then(() => {
-      alert('User successfully registered');
+      this.toast.success('User successfully registered');
       this.singupForm.reset();
     }).catch((error) => {
-      alert("ERROR: " + error);
+      this.toast.error("ERROR: " + error);
     });
   }
 

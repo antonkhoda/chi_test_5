@@ -13,7 +13,8 @@ export class LoginGuard implements CanLoad {
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (!!localStorage.getItem('userList')) {
         this.router.navigate(['']);
-      }
+      };
+      
       return !localStorage.getItem('userList');
   }
 }

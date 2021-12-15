@@ -39,6 +39,7 @@ export class RegistrationBlockComponent implements OnInit {
 
   public register(): void {
     const { email, password } = this.singupForm.value;
+
     this.emailSingUp(email.toLowerCase(), password).then(() => {
       alert('User successfully registered');
       this.singupForm.reset();
@@ -54,6 +55,7 @@ export class RegistrationBlockComponent implements OnInit {
       email: credential.user.email,
       role: 'USER'
     };
+    
     setDoc(doc(this.afs, 'users', credential.user.uid), user).then(() => {
       localStorage.setItem('userList', JSON.stringify(user));
       this.router.navigate(['']);

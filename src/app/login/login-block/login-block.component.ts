@@ -46,6 +46,7 @@ export class LoginBlockComponent implements OnInit {
 
   public login(): void {
     const { email, password } = this.loginForm.value;
+
     this.emailLogin(email.toLowerCase(), password).then(() => {
       alert('Welcome');
       this.loginForm.reset()
@@ -56,6 +57,7 @@ export class LoginBlockComponent implements OnInit {
 
   private async emailLogin(email: string, password: string): Promise<any> {
     const credential = await signInWithEmailAndPassword(this.auth, email, password);
+
     this.subscriptions.add(
       docData(doc(this.afs, 'users', credential.user.uid)).subscribe((user) => {
         localStorage.setItem('userList', JSON.stringify(user));
@@ -67,6 +69,7 @@ export class LoginBlockComponent implements OnInit {
   public loginWithFacebook(): void {
     const provider = new FacebookAuthProvider();
     const auth = getAuth();
+    
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = {

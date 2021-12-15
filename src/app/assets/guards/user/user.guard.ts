@@ -14,6 +14,7 @@ export class UserGuard implements CanLoad {
       if(!localStorage.getItem('userList')){
         this.router.navigate(['/login']);
       };
+      
       return !!localStorage.getItem('userList');
   }
 }

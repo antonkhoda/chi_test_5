@@ -15,10 +15,10 @@ export class AuthService {
     private router: Router
   ) { }
 
-  logOut(): void {
+  public logOut(): void {
     signOut(this.auth).then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['']);
+      localStorage.removeItem('userList');
+      this.router.navigate(['login']);
       this.currentUser$.next(false);
     })
   }

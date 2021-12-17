@@ -1,0 +1,43 @@
+<h3 class="title">Add new category</h3>
+<hr>
+<form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="form--admin">
+  <input type="text" class="input input--txt" formControlName="name" placeholder="Category name">
+  <input type="text" class="input input--txt" formControlName="path" placeholder="Category path">
+  <ng-container *ngIf="!isUploaded">
+    <input type="text" formControlName="imagePath" [hidden]="true">
+    <input type="file" class="input input--btn" (change)="upload($event)">
+  </ng-container>
+  <ng-container *ngIf="isUploaded">
+    <img [src]="valueByControl('imagePath')" width="120px">
+    <input type="button" class="input input--btn" (click)="deleteImage()" value="Delete image">
+  </ng-container>
+  <button type="submit" class="input input--btn" [disabled]="categoryForm.invalid">Save</button>
+</form>
+
+<h3 class="title">Add new category</h3>
+<hr>
+<table class="table">
+  <thead class="table-head">
+      <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Path</th>
+          <th scope="col">Image path</th>
+          <th scope="col">Actions</th>
+      </tr>
+  </thead>
+  <tbody class="table-body">
+      <tr *ngFor="let category of adminCategories">
+          <td>{{ category.name }}</td>
+          <td>{{ category.path }}</td>
+          <td>
+            <img [src]="category.imagePath" width="100px">
+          </td>
+          <td>
+              <div class="table-body__actions">
+                  <button class="input input--btn">Edit</button>
+                  <button class="input input--btn no-margin">Delete</button>
+              </div>
+          </td>
+      </tr>
+  </tbody>
+</table>

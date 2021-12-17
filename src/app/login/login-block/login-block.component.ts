@@ -53,7 +53,7 @@ export class LoginBlockComponent implements OnInit {
       this.toast.success('Welcome');
       this.loginForm.reset()
     }).catch((error) => {
-      this.toast.error("ERROR: " + error);
+      this.toast.error(`ERROR: ${error}`);
     });
   }
 
@@ -84,7 +84,7 @@ export class LoginBlockComponent implements OnInit {
         this.router.navigate(['']);
       })
       .catch((error) => {
-        this.toast.error('ERROR: ' + error);
+        this.toast.error(`ERROR: ${error}`);
       });
   }
 

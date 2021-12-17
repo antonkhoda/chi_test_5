@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  BACKEND_URL: 'http://localhost:4200',
   firebaseConfig: {
     apiKey: "AIzaSyBlQvTASKKDqudS1DSrma5320bLHDfe1Xg",
     authDomain: "chi-shop-fe5ac.firebaseapp.com",

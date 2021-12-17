@@ -1,0 +1,28 @@
+.container{
+    box-shadow: 0px 4px 16px 0px rgba(34, 60, 80, 0.15);
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+
+    &-nav{
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+    }
+
+    &-bar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 30%;
+
+        &__btn{
+            width: 120px;
+            margin: 0;
+        }
+    }
+}

@@ -46,7 +46,7 @@ export class RegistrationBlockComponent implements OnInit {
       this.toast.success('User successfully registered');
       this.singupForm.reset();
     }).catch((error) => {
-      this.toast.error("ERROR: " + error);
+      this.toast.error(`ERROR: ${error}`);
     });
   }
 

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="wrapper header">
+    <div class="header-logo">LOGO</div>
+    <nav class="header-nav">
+      <a class="link" [routerLink]="[ '' ]" routerLinkActive="active">Discounts</a>
+      <a class="link">Сategory 1</a>
+      <a class="link">Сategory 2</a>
+      <a class="link">Сategory 3</a>
+    </nav>
+    <div class="header-bar">
+      <a class="link" [routerLink]="[ '/liked' ]" routerLinkActive="active">Liked</a>
+      <a class="link" [routerLink]="[ '/basket' ]" routerLinkActive="active">Basket</a>
+      <a class="link" *ngIf="isAdminLogin" [routerLink]="[ '/admin/products' ]" routerLinkActive="active">Admin</a>
+      <input type="button" value="Log out" class="input input--btn header-bar__btn" (click)="logOut()">
+    </div>
+  </div>
+</div>

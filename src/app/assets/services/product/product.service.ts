@@ -1,40 +1,31 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { IProductResponse } from '../../interfaces/product/product';
+import { collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection } from '@firebase/firestore';
+import { Observable, Subject } from 'rxjs';
+import { IProductRequest, IProductResponse } from "../../interfaces/product/product";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private url = environment.BACKEND_URL;
-  private api = { product: `${this.url}/product` };
+  constructor(
+    private firestore: Firestore
+  ) { }
 
-  constructor(private http: HttpClient) { }
-
-  getAll(): Observable<IProductResponse[]> {
-    return this.http.get<IProductResponse[]>(this.api.product);
+  public getAll(): Observable<DocumentData[]> {
+    return collectionData(collection(this.firestore, "product"), { idField: 'id' });
   }
 
-  getByCategory(categoryName: string): Observable<IProductResponse[]> {
-    return this.http.get<IProductResponse[]>(`${this.api.product}?category.path=${categoryName}`);
+  public create(product: IProductRequest): Promise<DocumentReference<DocumentData>> {
+    return addDoc(collection(this.firestore, "product"), product);
   }
 
-  getOne(id: number): Observable<IProductResponse> {
-    return this.http.get<IProductResponse>(`${this.api.product}/${id}`);
+  public update(product: IProductRequest, id: string): Promise<void> {
+    return setDoc(doc(this.firestore, "product", id), product);
   }
 
-  create(product: IProductResponse): Observable<void> {
-    return this.http.post<void>(this.api.product, product);
-  }
-
-  update(product: IProductResponse, id: number): Observable<void> {
-    return this.http.patch<void>(`${this.api.product}/${id}`, product);
-  }
-
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.api.product}/${id}`);
+  public delete(product: IProductResponse): Promise<void> {
+    return deleteDoc(doc(this.firestore, "product", product.id as string));
   }
 }

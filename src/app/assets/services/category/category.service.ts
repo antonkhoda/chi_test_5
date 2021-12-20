@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { collectionData, deleteDoc, doc, docData, DocumentData, DocumentReference, Firestore, setDoc } from '@angular/fire/firestore';
+import { collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, setDoc } from '@angular/fire/firestore';
 import { addDoc, collection } from '@firebase/firestore';
 import { Observable, Subject } from 'rxjs';
-import { ICategory } from '../../interfaces/category/category';
+import { ICategoryRequest, ICategoryResponse } from '../../interfaces/category/category';
 
 
 @Injectable({
@@ -16,19 +14,19 @@ export class CategoryService {
     private firestore: Firestore
   ) { }
 
-  getAll(): Observable<DocumentData[]> {
-    return collectionData(collection(this.firestore, "category"))
+  public getAll(): Observable<DocumentData[]> {
+    return collectionData(collection(this.firestore, "category"), { idField: 'id' });
   }
 
-  create(category: ICategory): Promise<DocumentReference<DocumentData>> {
+  public create(category: ICategoryRequest): Promise<DocumentReference<DocumentData>> {
     return addDoc(collection(this.firestore, "category"), category);
   }
 
-  update(category: ICategory): Promise<void> {
-    return setDoc(doc(this.firestore, "category", category.id as string), category);
+  public update(category: ICategoryRequest, id: string): Promise<void> {
+    return setDoc(doc(this.firestore, "category", id), category);
   }
 
-  delete(category: ICategory): Promise<void> {
+  public delete(category: ICategoryResponse): Promise<void> {
     return deleteDoc(doc(this.firestore, "category", category.id as string));
   }
 }

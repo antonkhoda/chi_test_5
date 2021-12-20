@@ -10,10 +10,3 @@ export interface ICategoryResponse {
     path: string;
     imagePath: string;
 }
-
-export interface ICategory {
-    id: string;
-    name: string;
-    path: string;
-    imagePath: string;
-}

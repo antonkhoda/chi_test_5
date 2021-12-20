@@ -1,43 +1,57 @@
 <h3 class="title">Add new category</h3>
 <hr>
-<form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="form--admin">
-  <input type="text" class="input input--txt" formControlName="name" placeholder="Category name">
-  <input type="text" class="input input--txt" formControlName="path" placeholder="Category path">
+<form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="form form--admin">
+  <label class="input--label">
+    Name
+    <input type="text" class="input input--txt" formControlName="name" placeholder="Add category name">
+  </label>
+  <label class="input--label">
+    Path
+    <input type="text" class="input input--txt" formControlName="path" placeholder="Add category path">
+  </label>
+
   <ng-container *ngIf="!isUploaded">
     <input type="text" formControlName="imagePath" [hidden]="true">
-    <input type="file" class="input input--btn" (change)="upload($event)">
+    <label class="input input--btn">
+      <input type="file" class="input input--btn display--none" (change)="uploadImage($event)" [hidden]="true">
+      Upload image
+    </label>
   </ng-container>
   <ng-container *ngIf="isUploaded">
-    <img [src]="valueByControl('imagePath')" width="120px">
+    <img [src]="valueImage('imagePath')" class="img img--small">
     <input type="button" class="input input--btn" (click)="deleteImage()" value="Delete image">
   </ng-container>
-  <button type="submit" class="input input--btn" [disabled]="categoryForm.invalid">Save</button>
+  <button *ngIf="isEdit" type="button" class="input input--btn" [disabled]="categoryForm.invalid"
+    (click)="editSaveChanges()">Save changes</button>
+  <button *ngIf="!isEdit" type="submit" class="input input--btn" [disabled]="categoryForm.invalid">Save</button>
 </form>
 
-<h3 class="title">Add new category</h3>
-<hr>
-<table class="table">
-  <thead class="table-head">
+<ng-container *ngIf="adminCategories.length">
+  <h3 class="title">Add new category</h3>
+  <hr>
+  <table class="table">
+    <thead class="table-head">
       <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Path</th>
-          <th scope="col">Image path</th>
-          <th scope="col">Actions</th>
+        <th scope="col">Name</th>
+        <th scope="col">Path</th>
+        <th scope="col">Image path</th>
+        <th scope="col">Actions</th>
       </tr>
-  </thead>
-  <tbody class="table-body">
+    </thead>
+    <tbody class="table-body">
       <tr *ngFor="let category of adminCategories">
-          <td>{{ category.name }}</td>
-          <td>{{ category.path }}</td>
-          <td>
-            <img [src]="category.imagePath" width="100px">
-          </td>
-          <td>
-              <div class="table-body__actions">
-                  <button class="input input--btn">Edit</button>
-                  <button class="input input--btn no-margin">Delete</button>
-              </div>
-          </td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.path }}</td>
+        <td>
+          <img [src]="category.imagePath" class="img img--small no-margin">
+        </td>
+        <td>
+          <div class="table-body__actions">
+            <button class="input input--btn" (click)="editCategory(category)">Edit</button>
+            <button class="input input--btn no-margin" (click)="deleteCategory(category)">Delete</button>
+          </div>
+        </td>
       </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</ng-container>

@@ -1,2 +1,67 @@
 <h3 class="title">Add new product</h3>
 <hr>
+<form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="form form--admin">
+  <label class="input--label">
+    Name
+    <input type="text" class="input input--txt" formControlName="name" placeholder="Add product name">
+  </label>
+  <label class="input--label">
+    Price
+    <input type="number" class="input input--txt" formControlName="price" placeholder="Add product price">
+  </label>
+  <label class="input--label">
+    Category
+    <select class="input input--select" formControlName="category">
+      <option [ngValue]="category"  *ngFor="let category of adminCategories">{{ category.name }}</option>
+    </select>
+  </label>
+  <label class="input--label">
+    Description
+    <textarea class="input input--textarea" formControlName="description" placeholder="Add product description"></textarea>
+  </label>
+
+  <ng-container *ngIf="!isUploaded">
+    <input type="text" formControlName="imagePath" [hidden]="true">
+    <label class="input input--btn">
+      <input type="file" class="input input--btn display--none" (change)="uploadImage($event)" [hidden]="true">
+      Upload image
+    </label>
+  </ng-container>
+  <ng-container *ngIf="isUploaded">
+    <img [src]="valueImage('imagePath')" class="img img--small">
+    <input type="button" class="input input--btn" (click)="deleteImage()" value="Delete image">
+  </ng-container>
+  <button *ngIf="isEdit" type="button" class="input input--btn" [disabled]="productForm.invalid"
+    (click)="editSaveChanges()">Save changes</button>
+  <button *ngIf="!isEdit" type="submit" class="input input--btn" [disabled]="productForm.invalid">Save</button>
+</form>
+
+<ng-container *ngIf="adminProducts.length">
+  <h3 class="title">Add new category</h3>
+  <hr>
+  <table class="table">
+    <thead class="table-head">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Category name</th>
+        <th scope="col">Image path</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table-body">
+      <tr *ngFor="let product of adminProducts">
+        <td>{{ product.name }}</td>
+        <td>{{ product.category.name }}</td>
+        <td>
+          <img [src]="product.imagePath" class="img img--small no-margin">
+        </td>
+        <td>
+          <div class="table-body__actions">
+            <button class="input input--btn" (click)="editProduct(product)">Edit</button>
+            <button class="input input--btn no-margin" (click)="deleteProduct(product)">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

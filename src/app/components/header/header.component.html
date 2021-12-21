@@ -1,14 +1,24 @@
 <div class="container">
   <div class="wrapper header">
     <div class="header-logo">LOGO</div>
-    <nav class="header-nav" *ngFor="let category of headerCategories">
-      <!-- <a class="link" [routerLink]="[ '' ]" routerLinkActive="active">Discounts</a> -->
-      <a class="link" [routerLink]="[ '/products/', category.path ]" routerLinkActive="active">{{ category.name }}</a>
+    <nav class="header-nav" >
+      <a class="link header-nav__link" [routerLink]="[ '' ]" routerLinkActive="active">
+        <img src="https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fdiscount.svg?alt=media&token=d3ed0d16-4876-4265-b14f-2b358cc1a3b1" class="header-nav__link-img">
+        Discounts
+      </a>
+      <a *ngFor="let category of headerCategories" class="link header-nav__link" [routerLink]="[ '/products/', category.path ]" routerLinkActive="active">
+        <img [src]="category.imagePath" class="header-nav__link-img">
+        {{ category.name }}
+      </a>
     </nav>
     <div class="header-bar">
-      <a class="link" [routerLink]="[ '/liked' ]" routerLinkActive="active">Liked</a>
-      <a class="link" [routerLink]="[ '/basket' ]" routerLinkActive="active">Basket</a>
-      <a class="link" *ngIf="isAdminLogin" [routerLink]="[ '/admin/products' ]" routerLinkActive="active">Admin</a>
+      <a class="link header-bar__link" [routerLink]="[ '/liked' ]" routerLinkActive="active">
+        <img src="https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fheart-v3.svg?alt=media&token=111c5a20-1fb8-4e72-a345-5abaa264f614" class="header-bar__link-img">
+      </a>
+      <a class="link header-bar__link" [routerLink]="[ '/basket' ]" routerLinkActive="active">
+        <img src="https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fshopping-cart.svg?alt=media&token=fdd3a71c-e272-43b8-b9ef-31652a8182c4" class="header-bar__link-img">
+      </a>
+      <a class="link header-bar__link" *ngIf="isAdminLogin" [routerLink]="[ '/admin/products' ]" routerLinkActive="active">Admin</a>
       <input type="button" value="Log out" class="input input--btn header-bar__btn" (click)="logOut()">
     </div>
   </div>

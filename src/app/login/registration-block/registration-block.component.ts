@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { IUser } from 'src/app/assets/interfaces/user/user';
+import { UserService } from 'src/app/assets/services/user/user.service';
 
 @Component({
   selector: 'app-registration-block',
@@ -16,6 +18,7 @@ export class RegistrationBlockComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private auth: Auth,
     private afs: Firestore,
     private router: Router,
@@ -51,16 +54,23 @@ export class RegistrationBlockComponent implements OnInit {
   }
 
   private async emailSingUp(email: string, password: string): Promise<any> {
-    const credential = await createUserWithEmailAndPassword(this.auth, email, password);
-    const user = {
+    const credential = await createUserWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    );
+    const user: IUser = {
       uid: credential.user.uid,
       email: credential.user.email,
-      role: 'USER'
+      liked: [],
+      basket: [],
+      role: 'USER',
     };
-    
-    setDoc(doc(this.afs, 'users', credential.user.uid), user).then(() => {
+
+    this.userService.add(user).then(() => {
       localStorage.setItem('userList', JSON.stringify(user));
       this.router.navigate(['']);
     });
   }
 }
+

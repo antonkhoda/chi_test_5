@@ -9,7 +9,8 @@ $color-gold: #C29545;
 $color-red: red;
 $color-green: green;
 $color-yellow: yellow;
-$basic-font-family: "Montserrat", sans-serif;
+$basic-font-family: "Montserrat",
+sans-serif;
 
 *,
 ::after,
@@ -30,7 +31,7 @@ body {
   outline: none !important;
 }
 
-.wrapper{
+.wrapper {
   width: 1200px;
   margin: 0 auto;
 }
@@ -94,6 +95,12 @@ hr {
     text-align: center;
     border: none;
 
+    &--light{
+      background-color: #fff;
+      color: $color-ash;
+      border: 2px solid $color-ash;
+    }
+
     &:hover {
       cursor: pointer;
       background-color: $color-gold;
@@ -107,23 +114,23 @@ hr {
     }
   }
 
-  &--select{
+  &--select {
     border: 3px solid $color-ash;
   }
 
-  &--textarea{
+  &--textarea {
     resize: none;
     height: 200px;
     border: 3px solid $color-ash;
   }
 
-  &--label{
+  &--label {
     width: 100%;
   }
 }
 
-.img{
-  &--small{
+.img {
+  &--small {
     width: 100px;
     margin-bottom: 10px;
   }
@@ -133,30 +140,31 @@ input.ng-dirty.ng-invalid {
   border-color: $color-red;
 }
 
-.form{
-  &--admin{
+.form {
+  &--admin {
     width: 50%;
     margin: 0 auto 50px auto;
   }
 }
 
-.table{
+.table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 
-  &-head{
+  &-head {
     background-color: $color-ash;
     color: $color-oatmeal;
   }
 
-  &-body{
+  &-body {
     background-color: $color-ash-transparent;
     text-align: center;
     font-size: 15px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 10px;
   }
 }
@@ -188,6 +196,98 @@ input.ng-dirty.ng-invalid {
 
   &-submit {
     width: 60%;
+  }
+}
+
+.shop{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 40px 0;
+
+  &-card{
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 49%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0px 0px 10px 0px rgba(34, 60, 80, 0.2);
+      transition: .2s;
+
+      &:hover{
+          cursor: pointer;
+          transform: scale(1.05);
+      }
+
+      &__img{
+          width: 30%;
+          height: 200px;
+          padding: 10px;
+          background-color: #fff;
+
+          &-inside{
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+          }
+      }
+
+      &__content{
+          width: 70%;
+          height: 100%;
+          padding: 10px;
+
+          &-title{
+              font-size: 20px;
+              text-align: center;
+              margin-bottom: 10px;
+          }
+
+          &-bricks{
+              display: flex;
+              justify-content: flex-start;
+              margin-bottom: 10px;
+
+              .shop-bricks{
+                  border-radius: 5px;
+                  margin-right: 10px;
+                  padding: 5px 10px;
+                  background-color: $color-oatmeal;
+                  font-size: 15px;
+              }
+          }
+
+          &-txt{
+              font-size: 15px;
+          }
+      }
+
+      &__btns{
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          left: -10px;
+          top: 0;
+          height: 100%;
+          padding: 10px;
+
+          &-item{
+              width: 40px;
+              height: 40px;
+              background-color: $color-oatmeal;  
+              margin-bottom: 10px;
+              padding: 5px;
+              border: none;
+          }
+
+          :hover{
+              cursor: pointer;
+              background-color: $color-gold;
+          }
+      }
   }
 }
 

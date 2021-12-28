@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { doc, Firestore } from '@angular/fire/firestore';
-import { docData } from 'rxfire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { HotToastService } from '@ngneat/hot-toast';
+import { UserService } from 'src/app/assets/services/user/user.service';
 
 @Component({
   selector: 'app-login-block',
@@ -19,6 +19,7 @@ export class LoginBlockComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private auth: Auth,
     private afs: Firestore,
     private router: Router,
@@ -61,7 +62,7 @@ export class LoginBlockComponent implements OnInit {
     const credential = await signInWithEmailAndPassword(this.auth, email, password);
 
     this.subscriptions.add(
-      docData(doc(this.afs, 'users', credential.user.uid)).subscribe((user) => {
+      this.userService.get(credential.user.uid).subscribe((user) => {
         localStorage.setItem('userList', JSON.stringify(user));
         this.router.navigate(['']);
       })
@@ -77,6 +78,8 @@ export class LoginBlockComponent implements OnInit {
         const user = {
           uid: result.user.uid,
           email: result.user.email,
+          liked: [],
+          basket: [],
           role: 'USER'
         };
         this.toast.success('Welcome');

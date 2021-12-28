@@ -9,6 +9,8 @@ import { IProductRequest, IProductResponse } from "../../interfaces/product/prod
 })
 export class ProductService {
 
+  private urlFakeAPI = 'https://fakestoreapi.com/products';
+
   constructor(
     private firestore: Firestore
   ) { }
@@ -27,5 +29,13 @@ export class ProductService {
 
   public delete(product: IProductResponse): Promise<void> {
     return deleteDoc(doc(this.firestore, "product", product.id as string));
+  }
+
+  public getAllProductsFakeAPI(): Promise<Response> {
+    return fetch(this.urlFakeAPI);
+  }
+
+  public getSingleProductFakeAPI(productId: string): Promise<Response> {
+    return fetch(`${this.urlFakeAPI}/${productId}`);
   }
 }

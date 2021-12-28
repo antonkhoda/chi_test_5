@@ -10,6 +10,8 @@ import { ICategoryRequest, ICategoryResponse } from '../../interfaces/category/c
 })
 export class CategoryService {
 
+  private urlFakeAPI = 'https://fakestoreapi.com/products';
+
   constructor(
     private firestore: Firestore
   ) { }
@@ -28,5 +30,13 @@ export class CategoryService {
 
   public delete(category: ICategoryResponse): Promise<void> {
     return deleteDoc(doc(this.firestore, "category", category.id as string));
+  }
+
+  public getAllCategoriesFakeAPI(): Promise<Response> {
+    return fetch(`${this.urlFakeAPI}/categories`);
+  }
+
+  public getAllProductsByCategoryFakeAPI(categoryName: string): Promise<Response> {
+    return fetch(`${this.urlFakeAPI}/category/${categoryName}`);
   }
 }

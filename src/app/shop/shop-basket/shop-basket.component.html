@@ -1,1 +1,27 @@
-<p>shop-basket works!</p>
+<div class="wrapper shop basket">
+  <div class="shop-card" *ngFor="let item of products">
+    <div class="shop-card__img basket-img">
+      <img [src]="item.image" class="shop-card__img-inside">
+    </div>
+    <div class="shop-card__content">
+      <h3 class="shop-card__content-title basket-title">{{ item.title }}</h3>
+      <hr>
+      <div class="basket-control">
+        <p class="basket-txt">{{ item.price * item.count | currency:'USD' }}</p>
+        <div class="basket-counter">
+          <button class="input input--btn input--btn--light no-margin basket-counter__btn" (click)="decrement(item)">-</button>
+          <div class="basket-counter__info">{{ item.count }}</div>
+          <button class="input input--btn input--btn--light no-margin basket-counter__btn"(click)="increment(item)">+</button>
+        </div>
+        <button class="input input--btn input--btn--light no-margin basket-btn" (click)="deleteFromBasket(item)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="basket-info">
+  <hr>
+  <div class="basket-control">
+    <p>Total price:</p>
+    <p>{{ totalPrice | currency:'USD' }}</p>
+  </div>
+</div>

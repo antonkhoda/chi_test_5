@@ -4,34 +4,35 @@ import { Subscription } from 'rxjs';
 import { IProductResponseFakeAPI } from 'src/app/assets/interfaces/product/product';
 import { IUser } from 'src/app/assets/interfaces/user/user';
 import { CategoryService } from 'src/app/assets/services/category/category.service';
-import { ProductService } from 'src/app/assets/services/product/product.service';
 import { UserService } from 'src/app/assets/services/user/user.service';
 import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-shop-products',
   templateUrl: './shop-products.component.html',
-  styleUrls: ['./shop-products.component.scss']
+  styleUrls: ['./shop-products.component.scss'],
 })
 export class ShopProductsComponent implements OnInit {
-
   public products: Array<any> = [];
   private subscriptions: Subscription = new Subscription();
   public currentUser!: IUser;
 
-  public heartOutlinePath = 'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fheart-outline.svg?alt=media&token=8c871e6e-384f-4c88-8036-5de6069e4859';
-  public heartSolidlinePath = 'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fheart-solid.svg?alt=media&token=2a4f1782-01f5-4ccf-931b-bd8424a2d3a0';
-  public cartOutlinePath = 'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fshop-outline.svg?alt=media&token=cd9ce470-b49e-4136-930b-2044d82ea0c3';
-  public cartSolidlinePath = 'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fshop-solid.svg?alt=media&token=c9b54698-40c8-46ef-8729-abe103cfaed6';
+  public heartOutlinePath =
+    'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fheart-outline.svg?alt=media&token=8c871e6e-384f-4c88-8036-5de6069e4859';
+  public heartSolidlinePath =
+    'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fheart-solid.svg?alt=media&token=2a4f1782-01f5-4ccf-931b-bd8424a2d3a0';
+  public cartOutlinePath =
+    'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fshop-outline.svg?alt=media&token=cd9ce470-b49e-4136-930b-2044d82ea0c3';
+  public cartSolidlinePath =
+    'https://firebasestorage.googleapis.com/v0/b/chi-shop-fe5ac.appspot.com/o/icons%2Fshop-solid.svg?alt=media&token=c9b54698-40c8-46ef-8729-abe103cfaed6';
 
   constructor(
-    private productService: ProductService,
     private userService: UserService,
     private categoryService: CategoryService,
     private toast: HotToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('userList') as string);
@@ -41,9 +42,10 @@ export class ShopProductsComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-  private takeCategoryName(): void{   
+
+  private takeCategoryName(): void {
     this.subscriptions.add(
-      this.router.events.subscribe((event) => {      
+      this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           const categoryName =
             this.activatedRoute.snapshot.paramMap.get('category');
@@ -64,50 +66,65 @@ export class ShopProductsComponent implements OnInit {
             this.currentUser.liked.indexOf(element.id) < 0 ? false : true;
           element.basket = this.currentUser.basket.filter(
             (value) => value.id === element.id
-          ).length ? true : false;
+          ).length
+            ? true
+            : false;
         });
       });
   }
-  
-  public addToBasket(product: IProductResponseFakeAPI): void{  
-    const currentItem = this.currentUser.basket.filter(value => value.id == product.id);
+
+  public addToBasket(product: IProductResponseFakeAPI): void {
+    const currentItem = this.currentUser.basket.filter(
+      (value) => value.id == product.id
+    );
     const index = this.currentUser.basket.indexOf(currentItem[0]);
-  
-    if (index < 0){
+
+    if (index < 0) {
       this.currentUser.basket.push({
         id: product.id,
-        count: 1
+        count: 1,
       });
     } else {
       this.currentUser.basket.splice(index, 1);
     }
 
-    this.userService.update(this.currentUser).then(() => {
-      product.basket = !product.basket;
-      this.toast.success(product.basket ? 'Product added to basket' : 'Product deleted from basket');
-      localStorage.setItem('userList', JSON.stringify(this.currentUser));
-    })
-    .catch((error) => {
-      this.toast.error(`ERROR: ${error}`);
-    });
+    this.userService
+      .update(this.currentUser)
+      .then(() => {
+        product.basket = !product.basket;
+        this.toast.success(
+          product.basket
+            ? 'Product added to basket'
+            : 'Product deleted from basket'
+        );
+        localStorage.setItem('userList', JSON.stringify(this.currentUser));
+      })
+      .catch((error) => {
+        this.toast.error(`ERROR: ${error}`);
+      });
   }
 
-  public addToLicked(product: IProductResponseFakeAPI): void{
+  public addToLicked(product: IProductResponseFakeAPI): void {
     const index = this.currentUser.liked.indexOf(product.id);
-    if (index < 0){
+    if (index < 0) {
       this.currentUser.liked.push(product.id);
     } else {
       this.currentUser.liked.splice(index, 1);
     }
-    
-    this.userService.update(this.currentUser).then(() => {
-      product.liked = !product.liked;
-      this.toast.success(product.liked ? 'Product added to licked' : 'Product deleted from licked');
-      localStorage.setItem('userList', JSON.stringify(this.currentUser));
-    })
-    .catch((error) => {
-      this.toast.error(`ERROR: ${error}`);
-    });
-  }
 
+    this.userService
+      .update(this.currentUser)
+      .then(() => {
+        product.liked = !product.liked;
+        this.toast.success(
+          product.liked
+            ? 'Product added to licked'
+            : 'Product deleted from licked'
+        );
+        localStorage.setItem('userList', JSON.stringify(this.currentUser));
+      })
+      .catch((error) => {
+        this.toast.error(`ERROR: ${error}`);
+      });
+  }
 }

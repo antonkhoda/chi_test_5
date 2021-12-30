@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopBasketComponent } from './shop-basket/shop-basket.component';
+import { ShopDetailsComponent } from './shop-details/shop-details.component';
 import { ShopDiscountsComponent } from './shop-discounts/shop-discounts.component';
 import { ShopLikedComponent } from './shop-liked/shop-liked.component';
 import { ShopProductsComponent } from './shop-products/shop-products.component';
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'products/:category',
         component: ShopProductsComponent,
+      },
+      {
+        path: 'products/:category/:id/:name',
+        component: ShopDetailsComponent,
       },
       {
         path: 'liked',

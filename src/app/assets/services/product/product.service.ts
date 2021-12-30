@@ -35,7 +35,7 @@ export class ProductService {
     return fetch(this.urlFakeAPI);
   }
 
-  public getSingleProductFakeAPI(productId: string): Promise<Response> {
+  public getSingleProductFakeAPI(productId: string | number): Promise<Response> {
     return fetch(`${this.urlFakeAPI}/${productId}`);
   }
 }

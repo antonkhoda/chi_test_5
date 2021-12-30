@@ -7,6 +7,7 @@ import { ShopProductsComponent } from './shop-products/shop-products.component';
 import { ShopBasketComponent } from './shop-basket/shop-basket.component';
 import { ShopLikedComponent } from './shop-liked/shop-liked.component';
 import { ShopDiscountsComponent } from './shop-discounts/shop-discounts.component';
+import { ShopDetailsComponent } from './shop-details/shop-details.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ShopDiscountsComponent } from './shop-discounts/shop-discounts.componen
     ShopProductsComponent,
     ShopBasketComponent,
     ShopLikedComponent,
-    ShopDiscountsComponent
+    ShopDiscountsComponent,
+    ShopDetailsComponent
   ],
   imports: [
     CommonModule,

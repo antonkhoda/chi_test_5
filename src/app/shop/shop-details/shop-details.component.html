@@ -1,0 +1,33 @@
+<div class="wrapper shop">
+    <div class="item-card">
+      <div class="item-card__img">
+        <img [src]="currentProduct.image" class="item-card__img-inside">
+      </div>
+      <div class="item-card__content">
+        <h3 class="item-card__content-title">{{ currentProduct.title }}</h3>
+        <hr>
+        <p class="item-card__content-txt">
+            <span class="txt-title">Price:</span>
+            {{ currentProduct.price | currency:'USD' }}
+        </p>
+        <p class="item-card__content-txt">
+            <span class="txt-title">Category:</span>
+            {{ currentProduct.category }}
+        </p>
+        <p class="item-card__content-txt">
+            <span class="txt-title">Description:</span>
+            {{ currentProduct.description }}
+        </p>
+      </div>
+      <div class="item-card__btns">
+        <button class="input input--btn no-margin item-card__btns-item" (click)="addToBasket()">
+            <p>{{ currentProduct.basket ? 'Delete from basket' : 'Add to basket' }}</p>
+            <img [src]="currentProduct.basket ? cartSolidlinePath : cartOutlinePath" class="btns-item__img">
+          </button>
+          <button class="input input--btn no-margin item-card__btns-item" (click)="addToLicked()">
+            <p>{{ currentProduct.liked ? 'Delete from licked' : 'Add to licked' }}</p>
+            <img [src]="currentProduct.liked ? heartSolidlinePath : heartOutlinePath" class="btns-item__img">
+          </button>
+      </div>
+    </div>
+  </div>

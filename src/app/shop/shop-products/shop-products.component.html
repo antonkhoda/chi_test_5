@@ -1,5 +1,6 @@
 <div class="wrapper shop">
   <div class="shop-card" *ngFor="let item of products">
+    <div class="shop-card__active" [routerLink]="[ item.id, item.title ]" routerLinkActive="active"></div>
     <div class="shop-card__img">
       <img [src]="item.image" class="shop-card__img-inside">
     </div>

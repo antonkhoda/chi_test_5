@@ -3,28 +3,25 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HotToastModule } from '@ngneat/hot-toast';
-import { NgxMaskModule } from 'ngx-mask'
 import { HeaderComponent } from '../components/header/header.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent
-  ],
+  declarations: [HeaderComponent, FooterComponent],
   imports: [
     RouterModule,
     CommonModule,
+    HotToastModule.forRoot(),
     NgxMaskModule.forRoot(),
-    HotToastModule.forRoot()
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     HeaderComponent,
-    FooterComponent
-  ]
+    FooterComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

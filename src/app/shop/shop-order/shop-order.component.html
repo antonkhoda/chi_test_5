@@ -1,11 +1,34 @@
-<div class="dialog">
-  <div class="dialog-box">
+<div class="wrapper order">
+  <div class="dialog-box order-box">
     <h2 class="title">MAKE AN ORDER</h2>
     <form [formGroup]="orderForm" (submit)="makeAnOrder()" class="form">
-      <input type="email" class="input input--txt" placeholder="Email" formControlName="email">
-      <input type="text" class="input input--txt" placeholder="Phone" phoneMask formControlName="phone" maxlength="14" mask="(000) 000-000">
-      <input type="text" class="input input--txt" placeholder="Address" formControlName="address">
-      <input type="submit" value="Make an order" class="input input--btn form-submit" [disabled]="orderForm.invalid">
+      <input
+        type="email"
+        class="input input--txt"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <input
+        type="text"
+        class="input input--txt"
+        placeholder="Phone"
+        phoneMask
+        formControlName="phone"
+        maxlength="15"
+        mask="(000) 000-00-00"
+      />
+      <input
+        type="text"
+        class="input input--txt"
+        placeholder="Address"
+        formControlName="address"
+      />
+      <input
+        type="submit"
+        value="Make an order"
+        class="input input--btn form-submit"
+        [disabled]="orderForm.invalid"
+      />
     </form>
   </div>
 </div>

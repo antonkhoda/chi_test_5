@@ -32,18 +32,7 @@ export class ShopProductsComponent implements OnInit {
     private toast: HotToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    this.currentUser = JSON.parse(localStorage.getItem('userList') as string);
-    this.takeCategoryName();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  private takeCategoryName(): void {
+  ) {
     this.subscriptions.add(
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
@@ -53,6 +42,14 @@ export class ShopProductsComponent implements OnInit {
         }
       })
     );
+  }
+
+  ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('userList') as string);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   private loadProducts(name: string): void {

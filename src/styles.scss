@@ -1,16 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap");
 
 $color-burgundy: #882426;
-$color-oatmeal: #CDBEA7;
+$color-oatmeal: #cdbea7;
 $color-oatmeal-transparent: #cdbea748;
 $color-ash: #323030;
 $color-ash-transparent: #857f7f;
-$color-gold: #C29545;
+$color-gold: #c29545;
 $color-red: red;
 $color-green: green;
 $color-yellow: yellow;
-$basic-font-family: "Montserrat",
-sans-serif;
+$basic-font-family: "Montserrat", sans-serif;
 
 *,
 ::after,
@@ -94,7 +93,7 @@ hr {
     text-align: center;
     border: none;
 
-    &--light{
+    &--light {
       background-color: #fff;
       color: $color-ash;
       border: 2px solid $color-ash;
@@ -198,104 +197,122 @@ input.ng-dirty.ng-invalid {
   }
 }
 
-.shop{
+.shop {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 40px 0;
 
-  &-card{
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 49%;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      overflow: hidden;
-      box-shadow: 0px 0px 10px 0px rgba(34, 60, 80, 0.2);
-      transition: .2s;
+  &-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 49%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px 0px rgba(34, 60, 80, 0.2);
+    transition: 0.2s;
 
-      &:hover{
-          cursor: pointer;
-          transform: scale(1.05);
-      }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
 
-      &__img{
-          width: 30%;
-          height: 200px;
-          padding: 10px;
+    &__img {
+      width: 30%;
+      height: 200px;
+      padding: 10px;
 
-          &-inside{
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
-          }
-      }
-
-      &__content{
-          width: 70%;
-          height: 100%;
-          padding: 10px;
-
-          &-title{
-              font-size: 20px;
-              text-align: center;
-              margin-bottom: 10px;
-          }
-
-          &-bricks{
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 10px;
-
-            .shop-bricks{
-                border-radius: 5px;
-                margin-right: 10px;
-                padding: 5px 10px;
-                background-color: $color-oatmeal;
-                font-size: 15px;
-            }
-        }
-
-          &-txt{
-              font-size: 15px;
-          }
-      }
-
-      &__btns{
-          position: absolute;
-          z-index: 200;
-          display: flex;
-          flex-direction: column;
-          left: -10px;
-          top: 0;
-          height: 100%;
-          padding: 10px;
-          
-
-          &-item{
-              width: 40px;
-              height: 40px;
-              background-color: $color-oatmeal;  
-              margin-bottom: 10px;
-              padding: 5px;
-              border: none;
-              transition: .2s;
-          }
-
-          :hover{
-              cursor: pointer;
-              background-color: $color-gold;
-          }
-      }
-
-      &__active{
-        position: absolute;
-        z-index: 100;
+      &-inside {
         width: 100%;
         height: 100%;
+        object-fit: contain;
+      }
     }
+
+    &__content {
+      width: 70%;
+      height: 100%;
+      padding: 10px;
+
+      &-title {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      &-bricks {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+
+        .shop-bricks {
+          border-radius: 5px;
+          margin-right: 10px;
+          padding: 5px 10px;
+          background-color: $color-oatmeal;
+          font-size: 15px;
+        }
+      }
+
+      &-txt {
+        font-size: 15px;
+      }
+    }
+
+    &__btns {
+      position: absolute;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      left: -10px;
+      top: 0;
+      height: 100%;
+      padding: 10px;
+
+      &-item {
+        width: 40px;
+        height: 40px;
+        background-color: $color-oatmeal;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: none;
+        transition: 0.2s;
+      }
+
+      :hover {
+        cursor: pointer;
+        background-color: $color-gold;
+      }
+    }
+
+    &__active {
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  padding: 50px 0;
+
+  &-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+
+  &-title {
+    font-size: 50px;
   }
 }
 

@@ -1,26 +1,35 @@
+<div class="message" *ngIf="!products.length">
+  <img [src]="heartOutlinePath" class="message-img" />
+  <h3 class="message-title">No liked items</h3>
+</div>
 <div class="wrapper shop">
-    <div class="shop-card" *ngFor="let item of products">
-      <div class="shop-card__active" [routerLink]="[ '/products/', item.category, item.id, item.title ]" routerLinkActive="active"></div>
-      <div class="shop-card__img">
-        <img [src]="item.image" class="shop-card__img-inside">
+  <div class="shop-card" *ngFor="let item of products">
+    <div
+      class="shop-card__active"
+      [routerLink]="['/products/', item.category, item.id, item.title]"
+      routerLinkActive="active"
+    ></div>
+    <div class="shop-card__img">
+      <img [src]="item.image" class="shop-card__img-inside" />
+    </div>
+    <div class="shop-card__content">
+      <h3 class="shop-card__content-title">{{ item.title }}</h3>
+      <hr />
+      <div class="shop-card__content-bricks">
+        <div class="shop-bricks">{{ item.price | currency: "USD" }}</div>
+        <div class="shop-bricks">Rating: {{ item.rating.rate }}</div>
       </div>
-      <div class="shop-card__content">
-        <h3 class="shop-card__content-title">{{ item.title }}</h3>
-        <hr>
-        <div class="shop-card__content-bricks">
-          <div class="shop-bricks">{{ item.price | currency:'USD' }}</div>
-          <div class="shop-bricks">Rating: {{ item.rating.rate }}</div>
-        </div>
-        <p class="shop-card__content-txt">{{ item.description | slice:0:100 }}...</p>
-      </div>
-      <div class="shop-card__btns">
-        <button class="shop-card__btns-item" (click)="addToBasket(item)"> 
-          <img [src]="item.basket ? cartSolidlinePath : cartOutlinePath">
-        </button>
-        <button class="shop-card__btns-item" (click)="addToLicked(item)">
-          <img [src]="item.liked ? heartSolidlinePath : heartOutlinePath">
-        </button>
-      </div>
+      <p class="shop-card__content-txt">
+        {{ item.description | slice: 0:100 }}...
+      </p>
+    </div>
+    <div class="shop-card__btns">
+      <button class="shop-card__btns-item" (click)="addToBasket(item)">
+        <img [src]="item.basket ? cartSolidlinePath : cartOutlinePath" />
+      </button>
+      <button class="shop-card__btns-item" (click)="addToLicked(item)">
+        <img [src]="item.liked ? heartSolidlinePath : heartOutlinePath" />
+      </button>
     </div>
   </div>
-  
+</div>

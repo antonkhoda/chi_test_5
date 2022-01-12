@@ -21,28 +21,26 @@
     </div>
     <div class="item-card__btns">
       <button
-        class="input input--btn no-margin item-card__btns-item"
+        class="link input input--btn no-margin item-card__btns-item"
+        [class]="currentProduct.basket ? 'link--active' : ''"
         (click)="addToBasket()"
       >
         <p>
           {{ currentProduct.basket ? "Delete from basket" : "Add to basket" }}
         </p>
-        <img
-          [src]="currentProduct.basket ? cartSolidlinePath : cartOutlinePath"
-          class="btns-item__img"
-        />
+        <div class="btns-item__img link-cart-solid link-img link-img--active"></div>
+        <div class="btns-item__img link-cart-out link-img"></div>
       </button>
       <button
-        class="input input--btn no-margin item-card__btns-item"
+        class="link input input--btn no-margin item-card__btns-item"
+        [class]="currentProduct.liked ? 'link--active' : ''"
         (click)="addToLicked()"
       >
         <p>
           {{ currentProduct.liked ? "Delete from licked" : "Add to licked" }}
         </p>
-        <img
-          [src]="currentProduct.liked ? heartSolidlinePath : heartOutlinePath"
-          class="btns-item__img"
-        />
+        <div class="btns-item__img link-heart-solid link-img link-img--active"></div>
+        <div class="btns-item__img link-heart-out link-img"></div>
       </button>
     </div>
   </div>

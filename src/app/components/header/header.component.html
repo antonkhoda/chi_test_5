@@ -8,11 +8,13 @@
       </a>
     </nav>
     <div class="header-bar">
-      <a class="link header-bar__link" [routerLink]="[ '/liked' ]" routerLinkActive="active">
-        <img [src]="heartStatus ? heartSolidlinePath : heartOutlinePath" class="header-bar__link-img">
+      <a class="link header-bar__link" [class]="heartStatus ? 'link--active' : ''" [routerLink]="[ '/liked' ]" routerLinkActive="active">
+        <div class="header-bar__link-img link-heart-solid link-img link-img--active"></div>
+        <div class="header-bar__link-img link-heart-out link-img"></div>
       </a>
-      <a class="link header-bar__link" [routerLink]="[ '/basket' ]" routerLinkActive="active">
-        <img [src]="cartStatus ? cartSolidlinePath : cartOutlinePath" class="header-bar__link-img">
+      <a class="link header-bar__link" [class]="cartStatus ? 'link--active' : ''" [routerLink]="[ '/basket' ]" routerLinkActive="active">
+        <div class="header-bar__link-img link-cart-solid link-img link-img--active"></div>
+        <div class="header-bar__link-img link-cart-out link-img"></div>
       </a>
       <input type="button" value="Log out" class="input input--btn header-bar__btn" (click)="logOut()">
     </div>

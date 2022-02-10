@@ -55,6 +55,16 @@
 
     &__btn {
       width: 30%;
+      transition: none;
+    }
+  }
+}
+
+.shop{
+  &-card {
+    &:hover {
+      cursor: pointer;
+      transform: none;
     }
   }
 }

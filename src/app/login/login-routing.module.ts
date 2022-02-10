@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserGuard } from '../assets/guards/user/user.guard';
 import { LoginComponent } from './login.component';
-import { LoginBlockComponent } from './login-block/login-block.component';
-import { RegistrationBlockComponent } from './registration-block/registration-block.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: '',
+    canLoad: [UserGuard],
     component: LoginComponent,
     children: [
       {
         path: '',
-        component: LoginBlockComponent,
+        component: SignInComponent,
       },
       {
         path: 'registration',
-        component: RegistrationBlockComponent,
+        component: SignUpComponent,
       },
     ],
   },

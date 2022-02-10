@@ -14,11 +14,11 @@
         <p class="shop-card__content-txt">{{ item.description | slice:0:100 }}...</p>
       </div>
       <div class="shop-card__btns">
-        <button class="link shop-card__btns-item" [class]="item.basket ? 'link--active' : ''" (click)="addToBasket(item)"> 
+        <button class="link shop-card__btns-item" [ngClass]="{'link--active' : basket?.indexOf(item.id) !== -1}" (click)="addToBasket(item.id)"> 
           <div class="link-cart-solid link-img link-img--active"></div>
           <div class="link-cart-out link-img"></div>
         </button>
-        <button class="link shop-card__btns-item" [class]="item.liked ? 'link--active' : ''" (click)="addToLicked(item)">
+        <button class="link shop-card__btns-item item.liked" [ngClass]="{'link--active' : liked?.indexOf(item.id) !== -1}" (click)="addToLiked(item.id)">
           <div class="link-heart-solid link-img link-img--active"></div>
           <div class="link-heart-out link-img"></div>
         </button>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IProductResponseFakeAPI } from 'src/app/assets/interfaces/product/product';
-import { IUser } from 'src/app/assets/interfaces/user/user';
-import { CategoryService } from 'src/app/assets/services/category/category.service';
-import { UserService } from 'src/app/assets/services/user/user.service';
+import { IProductRequestFakeAPI } from 'src/app/assets/interfaces/product/product';
 import { HotToastService } from '@ngneat/hot-toast';
+import { ProductService } from 'src/app/assets/services/product/product.service';
+import { LikedService } from 'src/app/assets/services/liked/liked.service';
+import { BasketService } from 'src/app/assets/services/basket/basket.service';
 
 @Component({
   selector: 'app-shop-products',
@@ -13,13 +13,16 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./shop-products.component.scss'],
 })
 export class ShopProductsComponent implements OnInit {
-  public products: Array<any> = [];
+  public products: Array<IProductRequestFakeAPI> = [];
+  public liked: Array<number | string | undefined> = [];
+  public basket: Array<number | string | undefined> = [];
   private subscriptions: Subscription = new Subscription();
-  public currentUser!: IUser;
+  private currentCategory: string = '';
 
   constructor(
-    private userService: UserService,
-    private categoryService: CategoryService,
+    private productService: ProductService,
+    private likedService: LikedService,
+    private basketService: BasketService,
     private toast: HotToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -27,16 +30,19 @@ export class ShopProductsComponent implements OnInit {
     this.subscriptions.add(
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
-          const categoryName =
-            this.activatedRoute.snapshot.paramMap.get('category');
-          this.loadProducts(categoryName as string);
+          this.currentCategory = this.activatedRoute.snapshot.paramMap.get('category') as string;
+          this.loadProducts(this.currentCategory as string);
         }
       })
     );
   }
 
-  ngOnInit(): void {
-    this.currentUser = JSON.parse(localStorage.getItem('userList') as string);
+  ngOnInit(): void {}
+
+  ngDoCheck(): void {
+    this.loadProducts(this.currentCategory);
+    this.liked = this.likedService.likedState.likedArr;
+    this.basket = this.basketService.basketState.basketArr?.map(val => val.id);
   }
 
   ngOnDestroy(): void {
@@ -44,75 +50,23 @@ export class ShopProductsComponent implements OnInit {
   }
 
   private loadProducts(name: string): void {
-    this.categoryService
-      .getAllProductsByCategoryFakeAPI(name)
-      .then((res) => res.json())
-      .then((json) => {
-        this.products = json;
-        this.products.forEach((element) => {
-          element.liked =
-            this.currentUser.liked.indexOf(element.id) < 0 ? false : true;
-          element.basket = this.currentUser.basket.filter(
-            (value) => value.id === element.id
-          ).length
-            ? true
-            : false;
-        });
-      });
+    this.products = this.productService.filterProductsByCategory(name);
   }
 
-  public addToBasket(product: IProductResponseFakeAPI): void {
-    const currentItem = this.currentUser.basket.filter(
-      (value) => value.id == product.id
-    );
-    const index = this.currentUser.basket.indexOf(currentItem[0]);
+  public addToLiked(productId: number): void {
+    this.likedService.addOrRemoveFromLiked(productId)
+    .then(() => this.toast.success('Liked successfully updated'))
+    .catch((error) => {
+      this.toast.error(`ERROR: ${error}`);
+    });
+  }
 
-    if (index < 0) {
-      this.currentUser.basket.push({
-        id: product.id,
-        count: 1,
-      });
-    } else {
-      this.currentUser.basket.splice(index, 1);
-    }
-
-    this.userService
-      .update(this.currentUser)
-      .then(() => {
-        product.basket = !product.basket;
-        this.toast.success(
-          product.basket
-            ? 'Product added to basket'
-            : 'Product deleted from basket'
-        );
-        localStorage.setItem('userList', JSON.stringify(this.currentUser));
-      })
+  public addToBasket(productId: number): void {
+    this.basketService.addOrRemoveFromBasket(productId)
+      .then(() => this.toast.success('Basket successfully updated'))
       .catch((error) => {
         this.toast.error(`ERROR: ${error}`);
       });
   }
 
-  public addToLicked(product: IProductResponseFakeAPI): void {
-    const index = this.currentUser.liked.indexOf(product.id);
-    if (index < 0) {
-      this.currentUser.liked.push(product.id);
-    } else {
-      this.currentUser.liked.splice(index, 1);
-    }
-
-    this.userService
-      .update(this.currentUser)
-      .then(() => {
-        product.liked = !product.liked;
-        this.toast.success(
-          product.liked
-            ? 'Product added to licked'
-            : 'Product deleted from licked'
-        );
-        localStorage.setItem('userList', JSON.stringify(this.currentUser));
-      })
-      .catch((error) => {
-        this.toast.error(`ERROR: ${error}`);
-      });
-  }
 }

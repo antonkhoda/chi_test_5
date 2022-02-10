@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, setDoc } from '@angular/fire/firestore';
 import { addDoc, collection } from '@firebase/firestore';
-import { Observable, Subject } from 'rxjs';
-import { IProductRequest, IProductResponse } from "../../interfaces/product/product";
+import { Observable } from 'rxjs';
+import { IBasketRequestArr } from '../../interfaces/basket/basket';
+import { IProductRequest, IProductRequestFakeAPI, IProductResponse, IProductResponseFakeAPI } from "../../interfaces/product/product";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { IProductRequest, IProductResponse } from "../../interfaces/product/prod
 export class ProductService {
 
   private urlFakeAPI = 'https://fakestoreapi.com/products';
+  public productsState: Array<IProductRequestFakeAPI> = [];
 
   constructor(
     private firestore: Firestore
@@ -35,7 +37,28 @@ export class ProductService {
     return fetch(this.urlFakeAPI);
   }
 
-  public getSingleProductFakeAPI(productId: string | number): Promise<Response> {
-    return fetch(`${this.urlFakeAPI}/${productId}`);
+  public filterProductsByCategory(categoryName: string): Array<IProductRequestFakeAPI>{
+    return this.productsState.filter(val => val.category === categoryName);
+  }
+
+  public filterProductsByState(stateArr: Array<number | string | undefined>): Array<IProductRequestFakeAPI>{
+    return this.productsState.filter(val => stateArr?.indexOf(val.id) !== -1);
+  }
+
+  public filterModProductsByState(stateArr: Array<IBasketRequestArr>): Array<IProductResponseFakeAPI>{
+    let resultArr: Array<IProductResponseFakeAPI>= [];
+    let count: number = 1;
+    
+    this.filterProductsByState(stateArr?.map(val => val.id))
+    .forEach(element => {
+      count = stateArr?.find(val => val.id === element.id)?.count as number;
+      resultArr.push(Object.assign({}, element, {count: count}))
+    });
+
+    return resultArr;   
+  }
+
+  public getSingleProduct(productId: string | number): IProductRequestFakeAPI | undefined {    
+    return this.productsState.find(({ id }) => id === productId);
   }
 }

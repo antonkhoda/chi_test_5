@@ -9,11 +9,12 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { UserService } from 'src/app/assets/services/user/user.service';
 
 @Component({
-  selector: 'app-login-block',
-  templateUrl: './login-block.component.html',
-  styleUrls: ['./login-block.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginBlockComponent implements OnInit {
+export class SignInComponent implements OnInit {
+
   public loginForm!: FormGroup;
   private subscriptions: Subscription = new Subscription();
 

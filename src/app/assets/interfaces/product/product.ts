@@ -24,30 +24,21 @@ export interface IProductRequestFakeAPI {
     description: string;
     title: string;
     image: string;
-    rating: object; 
+    rating: IProductRatingFakeAPI; 
 }
 
 export interface IProductResponseFakeAPI {
-    id: number;
-    price: number;
-    category: string;
-    description: string;
-    title: string;
-    image: string;
-    rating: object;
-    basket: boolean;
-    liked: boolean;
-}
-
-export interface IProductModedFakeAPI {
   id: number;
   price: number;
   category: string;
   description: string;
   title: string;
   image: string;
-  rating: object;
-  basket: boolean;
-  liked: boolean;
-  count: number
+  rating: IProductRatingFakeAPI;
+  count: number;
+}
+
+export interface IProductRatingFakeAPI {
+  count: number;
+  rate: number;
 }

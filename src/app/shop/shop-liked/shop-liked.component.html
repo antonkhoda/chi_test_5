@@ -1,5 +1,5 @@
 <div class="message" *ngIf="!products.length">
-  <div class="message-img link-hart-out"></div>
+  <div class="message-img link-heart-out"></div>
   <h3 class="message-title">No liked items</h3>
 </div>
 <div class="wrapper shop">
@@ -24,11 +24,11 @@
       </p>
     </div>
     <div class="shop-card__btns">
-      <button class="link shop-card__btns-item" [class]="item.basket ? 'link--active' : ''" (click)="addToBasket(item)">
+      <button class="link shop-card__btns-item" [ngClass]="{'link--active' : basket?.indexOf(item.id) !== -1}" (click)="addToBasket(item.id)"> 
         <div class="link-cart-solid link-img link-img--active"></div>
-          <div class="link-cart-out link-img"></div>
+        <div class="link-cart-out link-img"></div>
       </button>
-      <button class="link shop-card__btns-item" [class]="item.liked ? 'link--active' : ''" (click)="addToLicked(item)">
+      <button class="link shop-card__btns-item link--active" (click)="addToLiked(item.id)">
           <div class="link-heart-solid link-img link-img--active"></div>
           <div class="link-heart-out link-img"></div>
       </button>

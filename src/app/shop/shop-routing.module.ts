@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IProductRequestFakeAPI } from '../assets/interfaces/product/product';
 import { ShopBasketComponent } from './shop-basket/shop-basket.component';
 import { ShopDetailsComponent } from './shop-details/shop-details.component';
 import { ShopDiscountsComponent } from './shop-discounts/shop-discounts.component';

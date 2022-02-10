@@ -8,12 +8,11 @@ import { IUser } from 'src/app/assets/interfaces/user/user';
 import { UserService } from 'src/app/assets/services/user/user.service';
 
 @Component({
-  selector: 'app-registration-block',
-  templateUrl: './registration-block.component.html',
-  styleUrls: ['./registration-block.component.scss']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss']
 })
-export class RegistrationBlockComponent implements OnInit {
-
+export class SignUpComponent implements OnInit {
   public singupForm!: FormGroup;
 
   constructor(
@@ -62,8 +61,6 @@ export class RegistrationBlockComponent implements OnInit {
     const user: IUser = {
       uid: credential.user.uid,
       email: credential.user.email,
-      liked: [],
-      basket: [],
       role: 'USER',
     };
 
@@ -73,4 +70,3 @@ export class RegistrationBlockComponent implements OnInit {
     });
   }
 }
-

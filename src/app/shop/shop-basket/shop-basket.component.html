@@ -16,24 +16,15 @@
             {{ item.price * item.count | currency: "USD" }}
           </p>
           <div class="basket-counter">
-            <button
-              class="input input--btn input--btn--light no-margin basket-counter__btn"
-              (click)="decrement(item)"
-            >
+            <button class="input input--btn input--btn--light no-margin basket-counter__btn" (click)="decrement(item.id, item.count)">
               -
             </button>
             <div class="basket-counter__info">{{ item.count }}</div>
-            <button
-              class="input input--btn input--btn--light no-margin basket-counter__btn"
-              (click)="increment(item)"
-            >
+            <button class="input input--btn input--btn--light no-margin basket-counter__btn" (click)="increment(item.id, item.count)">
               +
             </button>
           </div>
-          <button
-            class="input input--btn input--btn--light no-margin basket-btn"
-            (click)="deleteFromBasket(item)"
-          >
+          <button class="input input--btn input--btn--light no-margin basket-btn" (click)="deleteFromBasket(item.id)">
             Delete
           </button>
         </div>
@@ -46,11 +37,8 @@
       <p>Total price:</p>
       <p>{{ totalPrice | currency: "USD" }}</p>
     </div>
-    <a
-      class="link link--btn bbasket-info__btn"
-      [routerLink]="['/order']"
-      routerLinkActive="active"
-      >Мake an order</a
-    >
+    <a class="link link--btn bbasket-info__btn" [routerLink]="['/order']" routerLinkActive="active">
+      Make an order
+    </a>
   </div>
 </div>

@@ -20,24 +20,16 @@
       </p>
     </div>
     <div class="item-card__btns">
-      <button
-        class="link input input--btn no-margin item-card__btns-item"
-        [class]="currentProduct.basket ? 'link--active' : ''"
-        (click)="addToBasket()"
-      >
+      <button class="link input input--btn no-margin item-card__btns-item" [ngClass]="{'link--active' : basket?.indexOf(currentProduct.id) !== -1}" (click)="addToBasket()">
         <p>
-          {{ currentProduct.basket ? "Delete from basket" : "Add to basket" }}
+          {{ basket?.indexOf(currentProduct.id) !== -1 ? "Delete from basket" : "Add to basket" }}
         </p>
         <div class="btns-item__img link-cart-solid link-img link-img--active"></div>
         <div class="btns-item__img link-cart-out link-img"></div>
       </button>
-      <button
-        class="link input input--btn no-margin item-card__btns-item"
-        [class]="currentProduct.liked ? 'link--active' : ''"
-        (click)="addToLicked()"
-      >
+      <button class="link input input--btn no-margin item-card__btns-item" [ngClass]="{'link--active' : liked?.indexOf(currentProduct.id) !== -1}" (click)="addToLiked()">
         <p>
-          {{ currentProduct.liked ? "Delete from licked" : "Add to licked" }}
+          {{ liked?.indexOf(currentProduct.id) !== -1 ? "Delete from licked" : "Add to licked" }}
         </p>
         <div class="btns-item__img link-heart-solid link-img link-img--active"></div>
         <div class="btns-item__img link-heart-out link-img"></div>

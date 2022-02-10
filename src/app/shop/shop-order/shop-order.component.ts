@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgControl, Validators } from '@angular/forms';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { IUser } from 'src/app/assets/interfaces/user/user';
-import { UserService } from 'src/app/assets/services/user/user.service';
 import { OrderService } from 'src/app/assets/services/order/order.service';
+import { BasketService } from 'src/app/assets/services/basket/basket.service';
+import { IBasketRequestArr } from 'src/app/assets/interfaces/basket/basket';
+import { IOrder } from 'src/app/assets/interfaces/order/order';
 
 @Component({
   selector: 'app-shop-order',
@@ -16,11 +16,12 @@ import { OrderService } from 'src/app/assets/services/order/order.service';
 export class ShopOrderComponent implements OnInit {
   public orderForm!: FormGroup;
   public currentUser!: IUser;
+  public basket: Array<IBasketRequestArr> = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private orderService: OrderService,
-    private userService: UserService,
+    private basketService: BasketService,
     private router: Router,
     private toast: HotToastService
   ) {}
@@ -28,6 +29,10 @@ export class ShopOrderComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('userList') as string);
     this.initForm();
+  }
+
+  ngDoCheck(): void {
+    this.basket = this.basketService.basketState?.basketArr;
   }
 
   private initForm(): void {
@@ -45,24 +50,26 @@ export class ShopOrderComponent implements OnInit {
   }
 
   public makeAnOrder(): void {
-    this.orderService
-      .create(this.orderForm.value)
-      .then(() => {
-        this.toast.success('Order successfully added');
-        this.orderForm.reset();
-        this.currentUser.basket = [];
-        this.userService
-          .update(this.currentUser)
-          .then(() => {
-            localStorage.setItem('userList', JSON.stringify(this.currentUser));
-          })
-          .catch((error) => {
-            this.toast.error(`ERROR: ${error}`);
-          });
-        this.router.navigate(['']);
-      })
-      .catch((error) => {
-        this.toast.error(`ERROR: ${error}`);
-      });
+    if (this.basket.length) {
+      const newOrder: IOrder = Object.assign({}, this.orderForm.value, { basketArr: this.basket });
+
+      this.orderService
+        .create(newOrder)
+        .then(() => {
+          this.toast.success('Order successfully added');
+          this.orderForm.reset();
+          this.basketService
+            .update({ id: this.basketService.basketState.id, basketArr: [] })
+            .catch((error) => {
+              this.toast.error(`ERROR: ${error}`);
+            });
+          this.router.navigate(['']);
+        })
+        .catch((error) => {
+          this.toast.error(`ERROR: ${error}`);
+        });
+    } else {
+      this.toast.warning('The basket is empty');
+    }
   }
 }
